@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BurgerMaker.Loggers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,11 @@ namespace BurgerMaker.Helpers
     {
         public void OnException(ExceptionContext filterContext)
         {
+            LoggerFactory loggerFactory = new LoggerFactory();
+            ILoggerAdapter loggerAdapter = loggerFactory.GetLoggerAdapter();
+            loggerAdapter.Log(filterContext.Exception);
+
             filterContext.Result = new ViewResult { ViewName = "ServerError" };
-            (filterContext.Result as ViewResult).ViewBag.UserMadeError = filterContext.Exception.Message; //TODO: this has to be put into a log file
             filterContext.ExceptionHandled = true;
             filterContext.HttpContext.Response.Clear();
             filterContext.HttpContext.Response.StatusCode = 500;

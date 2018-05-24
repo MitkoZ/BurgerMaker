@@ -98,5 +98,10 @@ namespace BurgerMaker.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        public ActionResult SimulateAnException()
+        {
+            throw new System.Exception("Simulated exception");
+        }
     }
 }
