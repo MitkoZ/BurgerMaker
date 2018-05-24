@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BurgerMakerDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Buns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BurgerIngredients">
+          <Key>
+            <PropertyRef Name="BurgerId" />
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="BurgerId" Type="int" Nullable="false" />
+          <Property Name="IngredientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Burgers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BunsId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IngredientTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IngredientTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="130" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BurgerIngredients_Burgers">
+          <End Role="Burgers" Type="Self.Burgers" Multiplicity="1" />
+          <End Role="BurgerIngredients" Type="Self.BurgerIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Burgers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BurgerIngredients">
+              <PropertyRef Name="BurgerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BurgerIngredients_Ingredients">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="BurgerIngredients" Type="Self.BurgerIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BurgerIngredients">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Burgers_Buns">
+          <End Role="Buns" Type="Self.Buns" Multiplicity="1" />
+          <End Role="Burgers" Type="Self.Burgers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buns">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Burgers">
+              <PropertyRef Name="BunsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Burgers_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Burgers" Type="Self.Burgers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Burgers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingredients_IngredientTypes">
+          <End Role="IngredientTypes" Type="Self.IngredientTypes" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IngredientTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="IngredientTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BurgerMakerDbModelStoreContainer">
+          <EntitySet Name="Buns" EntityType="Self.Buns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BurgerIngredients" EntityType="Self.BurgerIngredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Burgers" EntityType="Self.Burgers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IngredientTypes" EntityType="Self.IngredientTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BurgerIngredients_Burgers" Association="Self.FK_BurgerIngredients_Burgers">
+            <End Role="Burgers" EntitySet="Burgers" />
+            <End Role="BurgerIngredients" EntitySet="BurgerIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BurgerIngredients_Ingredients" Association="Self.FK_BurgerIngredients_Ingredients">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="BurgerIngredients" EntitySet="BurgerIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Burgers_Buns" Association="Self.FK_Burgers_Buns">
+            <End Role="Buns" EntitySet="Buns" />
+            <End Role="Burgers" EntitySet="Burgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Burgers_Users" Association="Self.FK_Burgers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Burgers" EntitySet="Burgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingredients_IngredientTypes" Association="Self.FK_Ingredients_IngredientTypes">
+            <End Role="IngredientTypes" EntitySet="IngredientTypes" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BurgerMakerDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bun">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Burgers" Relationship="Self.FK_Burgers_Buns" FromRole="Buns" ToRole="Burgers" />
+        </EntityType>
+        <EntityType Name="Burger">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BunsId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bun" Relationship="Self.FK_Burgers_Buns" FromRole="Burgers" ToRole="Buns" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Burgers_Users" FromRole="Burgers" ToRole="Users" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.BurgerIngredients" FromRole="Burgers" ToRole="Ingredients" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IngredientTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="IngredientType" Relationship="Self.FK_Ingredients_IngredientTypes" FromRole="Ingredients" ToRole="IngredientTypes" />
+          <NavigationProperty Name="Burgers" Relationship="Self.BurgerIngredients" FromRole="Ingredients" ToRole="Burgers" />
+        </EntityType>
+        <EntityType Name="IngredientType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK_Ingredients_IngredientTypes" FromRole="IngredientTypes" ToRole="Ingredients" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="130" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Burgers" Relationship="Self.FK_Burgers_Users" FromRole="Users" ToRole="Burgers" />
+        </EntityType>
+        <Association Name="FK_Burgers_Buns">
+          <End Role="Buns" Type="Self.Bun" Multiplicity="1" />
+          <End Role="Burgers" Type="Self.Burger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buns">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Burgers">
+              <PropertyRef Name="BunsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Burgers_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Burgers" Type="Self.Burger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Burgers">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingredients_IngredientTypes">
+          <End Role="IngredientTypes" Type="Self.IngredientType" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IngredientTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="IngredientTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BurgerIngredients">
+          <End Role="Burgers" Type="Self.Burger" Multiplicity="*" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BurgerMakerDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Buns" EntityType="Self.Bun" />
+          <EntitySet Name="Burgers" EntityType="Self.Burger" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="IngredientTypes" EntityType="Self.IngredientType" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Burgers_Buns" Association="Self.FK_Burgers_Buns">
+            <End Role="Buns" EntitySet="Buns" />
+            <End Role="Burgers" EntitySet="Burgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Burgers_Users" Association="Self.FK_Burgers_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Burgers" EntitySet="Burgers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingredients_IngredientTypes" Association="Self.FK_Ingredients_IngredientTypes">
+            <End Role="IngredientTypes" EntitySet="IngredientTypes" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="BurgerIngredients" Association="Self.BurgerIngredients">
+            <End Role="Burgers" EntitySet="Burgers" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BurgerMakerDbModelStoreContainer" CdmEntityContainer="BurgerMakerDbContext">
+          <EntitySetMapping Name="Buns">
+            <EntityTypeMapping TypeName="BurgerMakerDbModel.Bun">
+              <MappingFragment StoreEntitySet="Buns">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Burgers">
+            <EntityTypeMapping TypeName="BurgerMakerDbModel.Burger">
+              <MappingFragment StoreEntitySet="Burgers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BunsId" ColumnName="BunsId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="BurgerMakerDbModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IngredientTypeId" ColumnName="IngredientTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IngredientTypes">
+            <EntityTypeMapping TypeName="BurgerMakerDbModel.IngredientType">
+              <MappingFragment StoreEntitySet="IngredientTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BurgerMakerDbModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BurgerIngredients" TypeName="BurgerMakerDbModel.BurgerIngredients" StoreEntitySet="BurgerIngredients">
+            <EndProperty Name="Burgers">
+              <ScalarProperty Name="Id" ColumnName="BurgerId" />
+            </EndProperty>
+            <EndProperty Name="Ingredients">
+              <ScalarProperty Name="Id" ColumnName="IngredientId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,20 @@
+﻿@model List<BurgerMaker.ViewModels.GetABurgerViewModel>
+
+@{
+    ViewBag.Title = "GetMyBurgers";
+}
+
+<h2>My Burgers</h2>
+
+<div>
+    <hr />
+    @foreach (BurgerMaker.ViewModels.GetABurgerViewModel getABurgerViewModel in Model)
+    {
+        <pre>
+            @getABurgerViewModel.ToString()
+        </pre>
+    }
+</div>
+<p>
+    @Html.ActionLink("Back to Home Page", "Index", "Home")
+</p>
