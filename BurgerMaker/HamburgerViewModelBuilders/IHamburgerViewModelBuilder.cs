@@ -1,12 +1,6 @@
 ﻿using BurgerMaker.ViewModels;
-using DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BurgerMaker.Interfaces
+namespace BurgerMaker.HamburgerViewModelBuilders
 {
     internal interface IHamburgerViewModelBuilder
     {

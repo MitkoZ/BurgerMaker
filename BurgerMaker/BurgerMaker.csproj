@@ -157,7 +157,7 @@
     <Compile Include="Helpers\ErrorHandlerAttribute.cs" />
     <Compile Include="Helpers\PasswordAttribute.cs" />
     <Compile Include="Helpers\LoginUserSession.cs" />
-    <Compile Include="Interfaces\IHamburgerViewModelBuilder.cs" />
+    <Compile Include="HamburgerViewModelBuilders\IHamburgerViewModelBuilder.cs" />
     <Compile Include="Loggers\ILoggerAdapter.cs" />
     <Compile Include="Loggers\InvalidLoggerAdapterException.cs" />
     <Compile Include="Loggers\JSONFileAdapter.cs" />

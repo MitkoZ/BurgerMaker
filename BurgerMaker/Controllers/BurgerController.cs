@@ -1,14 +1,11 @@
 ﻿using BurgerMaker.HamburgerViewModelBuilders;
 using BurgerMaker.Helpers;
-using BurgerMaker.Interfaces;
 using BurgerMaker.ViewModels;
 using DataAccess;
 using DataAccess.Interfaces;
 using Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BurgerMaker.Controllers
