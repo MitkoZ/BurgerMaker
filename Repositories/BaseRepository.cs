@@ -74,10 +74,5 @@ namespace Repositories
                 Update(item, x => x.Id == item.Id);
             }
         }
-
-        public void Submit()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
