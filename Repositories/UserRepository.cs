@@ -13,7 +13,7 @@ namespace Repositories
         {
 
         }
-        //todo make a lougout button
+
         public User GetUserByNameAndPassword(string username, string password)
         {
             User user = base.DBSet.FirstOrDefault(u => u.Username == username);
